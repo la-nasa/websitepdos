@@ -1,0 +1,36 @@
+// Fonts
+@import url('https://fonts.bunny.net/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import 'bootstrap/scss/bootstrap';
+
+
+// resources/sass/app.scss
+
+// 1. Vos variables (définies dans resources/sass/_variables.scss)
+@use 'variables' as *;
+
+// 2. Bootstrap en module
+@use 'bootstrap' with (
+  $enable-shadows: true,
+  $enable-hover-media-query: false
+);
+
+// 3. Imports de vos partials en @use
+@use 'mixins/banner';
+@use 'mixins/buttons';
+
+// 4. Votre CSS personnalisé
+:root {
+  --pdos-green: variables.$pdos-green;
+  --pdos-navy:  variables.$pdos-navy;
+  // ...
+}
+
+body {
+  background: var(--pdos-light);
+  // ...
+}
