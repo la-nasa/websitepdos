@@ -5,7 +5,6 @@ WORKDIR /app
 
 # Copier tous les fichiers nécessaires pour Vite
 COPY package*.json vite.config.js ./
-COPY postcss.config.js tailwind.config.js* ./
 
 # Copier les sources front
 COPY resources resources
