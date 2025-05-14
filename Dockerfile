@@ -11,7 +11,7 @@ RUN npm install
 # Copier le code front
 COPY resources/css resources/css
 COPY resources/js resources/js
-COPY public public   # si vous servez d'autres assets statiques
+COPY public public 
 
 RUN npm run build
 
