@@ -11,7 +11,7 @@ RUN npm install
 # Copier le code front
 COPY resources/css resources/css
 COPY resources/js resources/js
-COPY public public 
+COPY public public
 
 RUN npm run build
 
@@ -42,3 +42,11 @@ RUN chown -R www-data:www-data storage bootstrap/cache
 EXPOSE 8000
 
 CMD ["php","artisan","serve","--host=0.0.0.0","--port=8000"]
+
+# Étape front-builder
+RUN npm install && npm run build
+
+# Étape PHP
+COPY --from=front-builder /app/public/build public/build
+
+
