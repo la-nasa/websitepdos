@@ -1,0 +1,75 @@
+@import "bootstrap/dist/css/bootstrap.min.css";
+/* Palette */
+:root {
+  --pdos-green:  hsl(115, 78%, 55%);
+  --pdos-navy:   #274159;
+  --pdos-light:  #F9FAFB;
+  --pdos-white:  #FFFFFF;
+  --pdos-gray:   #6E6E6E;
+}
+
+.bg-pdos-green   { background-color: var(--pdos-green)   !important; }
+.text-pdos-green { color:           var(--pdos-green)   !important; }
+.bg-pdos-navy    { background-color: var(--pdos-navy)    !important; }
+.text-pdos-navy  { color:           var(--pdos-navy)    !important; }
+.bg-pdos-light   { background-color: var(--pdos-light)   !important; }
+.text-pdos-gray  { color:           var(--pdos-gray)    !important; }
+.text-pdos-white { color:           var(--pdos-white)   !important; }
+
+
+/* Navbar backdrop */
+.navbar-custom {
+  background: rgba(255,255,255,0.9);
+  backdrop-filter: blur(8px);
+}
+
+/* Carousel styling */
+.carousel-item {
+  position: relative;
+  height: 80vh;
+}
+.carousel-item::before {
+  content: "";
+  position: absolute; inset: 0;
+  background: rgba(0,0,0,0.6);
+}
+.carousel-caption {
+  position: absolute; top:50%; left:50%;
+  transform: translate(-50%,-50%);
+  max-width:600px;
+  background: rgba(0,0,0,0.5);
+  padding:2rem; border-radius:.5rem;
+  text-align:center;
+}
+.carousel-caption h1,
+.carousel-caption p {
+  color:#FFF !important;
+  text-shadow:0 2px 6px rgba(0,0,0,0.8);
+}
+.carousel-caption .btn {
+  margin-top:1.5rem;
+}
+
+/* Footer styling */
+footer {
+  background: var(--pdos-navy);
+  color: var(--pdos-white);
+}
+footer a { color: var(--pdos-white); text-decoration:none; }
+footer a:hover { color: var(--pdos-green); }
+
+/* Scroll-to-top */
+#scrollTop {
+  width:3rem; height:3rem;
+  border-radius:50%;
+  display:none;
+  align-items:center; justify-content:center;
+  box-shadow:0 .5rem 1rem rgba(0,0,0,.2);
+  background: var(--pdos-green);
+  color: var(--pdos-navy);
+}
+
+/* Global */
+body { background: var(--pdos-light); font-family: "Segoe UI", sans-serif; }
+.hover-scale { transition: transform .3s, box-shadow .3s; }
+.hover-scale:hover { transform: scale(1.03); box-shadow:0 .5rem 1rem rgba(0,0,0,.15); }

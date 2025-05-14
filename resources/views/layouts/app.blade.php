@@ -1,42 +1,38 @@
 <!DOCTYPE html>
-<html lang="fr">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
 
-  <title>@yield('title', config('app.name','People Dev'))</title>
+  <title>@yield('title',config('app.name','People Dev'))</title>
   <meta name="description" content="@yield('meta','')">
 
-  {{-- 1) Bootstrap CSS CDN --}}
+  {{-- 1) Bootstrap CDN (fallback rapide) --}}
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
         rel="stylesheet"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous">
 
-  {{-- 2) AOS CSS CDN --}}
+  {{-- 2) Votre CSS statique en public/css/app.css --}}
+  <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+
+  {{-- 3) AOS CDN (si utilisé) --}}
   <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
 
-  {{-- 3) Votre CSS compilé par Vite (manifest) --}}
-  @php
-    $manifestPath = public_path('build/manifest.json');
-    $manifest = file_exists($manifestPath)
-      ? json_decode(file_get_contents($manifestPath), true)
-      : [];
-    $cssFile = $manifest['resources/css/app.css']['file'] ?? null;
-  @endphp
-
-  @if($cssFile)
-    <link rel="stylesheet" href="{{ asset('build/'.$cssFile) }}">
-  @else
-    {{-- fallback vers un CSS statique si compilé absent --}}
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-  @endif
-
-  <style>
-    /* Petit debug pour voir si votre CSS custom passe */
-    /* body { outline: 2px solid lime !important; } */
-  </style>
+  {{-- Debug : bordure verte pour confirmer le chargement --}}
+  <style>body { outline: 3px solid lime; }</style>
 </head>
+  {{-- Bootstrap JS --}}
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-AO1IYxDVLyU2K4srYXfUHPcqDe5i/jI1y7itmEJu1RHj/9fQYBNSzqF6Y1UPt3Mg"
+          crossorigin="anonymous"></script>
+
+  {{-- AOS JS --}}
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script> AOS.init({ duration:600, once:true });</script>
+
+  {{-- (Optionnel) si votre JS custom compilé existe en public/js/app.js --}}
+  <script src="{{ asset('js/app.js') }}"></script>
+
 <body>
 
   {{-- Navbar (Bootstrap) --}}
