@@ -96,7 +96,8 @@ Nous gérons vos pages Facebook, LinkedIn, Instagram et Twitter avec des **campa
         ];
 
         foreach ($articles as $item) {
-            Article::create([
+            // $slug = Str::slug($item['titre']);
+            Article::updateOrcreate([
                 'titre'   => $item['titre'],
                 'contenu' => $item['contenu'],
                 'slug'    => Str::slug($item['titre']),
