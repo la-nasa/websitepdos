@@ -34,7 +34,7 @@
 
   <style>
     /* Petit debug pour voir si votre CSS custom passe */
-    body { outline: 2px solid lime !important; }
+    /* body { outline: 2px solid lime !important; } */
   </style>
 </head>
 <body>
