@@ -11,9 +11,15 @@
   @vite(['resources/css/app.css','resources/js/app.js'])
   <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  @php
+    $manifest = json_decode(file_get_contents(public_path('build/manifest.json')), true);
+    $cssFile  = $manifest['resources/css/app.css']['file'];
+    $jsFile   = $manifest['resources/js/app.js']['file'];
+  @endphp
+  <link rel="stylesheet" href="{{ asset('build/'.$cssFile) }}">
 </head>
 <body class="pt-5" style="padding-top:75px;">
-
+<script type="module" src="{{ asset('build/'.$jsFile) }}"></script>
   {{-- Navbar --}}
   <nav class="navbar navbar-expand-lg fixed-top navbar-custom shadow-sm">
     <div class="container">
