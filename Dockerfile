@@ -1,48 +1,52 @@
-# -------------------------------
-# Stage 1: Build des assets front
-# -------------------------------
+# ----------------------------
+# Stage 1 : Build des assets
+# ----------------------------
 FROM node:18 AS front-builder
 
+# Répertoire de travail pour le build front
 WORKDIR /app
 
-# Copier package.json + vite.config.js + tsconfig/postcss si besoin
+# Copie des fichiers de config Vite et des dépendances
 COPY package*.json vite.config.js ./
 
-# Installer les dépendances front
+# Installation des packages front
 RUN npm ci
 
-# Copier les sources front et compiler
-COPY resources resources
+# Copie des sources front (CSS & JS)
+COPY resources/js resources/js
+COPY resources/css resources/css
+
+# Build Vite pour prod (génère public/build/manifest.json & assets)
 RUN npm run build
 
-# -------------------------------
-# Stage 2: Build de l'app Laravel
-# -------------------------------
+# ----------------------------
+# Stage 2 : Build Laravel PHP
+# ----------------------------
 FROM php:8.1-fpm
 
-# 1) Dépendances système + extensions PHP
+# Installer dépendances système + extensions PHP
 RUN apt-get update && apt-get install -y \
     git unzip libzip-dev libpng-dev libonig-dev libpq-dev \
   && docker-php-ext-install pdo pdo_mysql pdo_pgsql zip gd mbstring
 
-# 2) Installer Composer
+# Installer Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www/html
 
-# 3) Copier tout le code Laravel
+# Copier tout le code Laravel
 COPY . .
 
-# 4) Copier les assets front-builder
+# Copier les assets front-builder dans public/build
 COPY --from=front-builder /app/public/build public/build
 
-# 5) Installer dépendances PHP
+# Installer les dépendances PHP
 RUN composer install --no-dev --optimize-autoloader
 
-# 6) Permissions
+# Permissions
 RUN chown -R www-data:www-data storage bootstrap/cache
 
-# 7) Entrypoint pour SQLite / migrations / démarrage
+# Entry point pour SQLite et migrations
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
