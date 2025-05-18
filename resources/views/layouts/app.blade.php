@@ -14,7 +14,9 @@
         crossorigin="anonymous">
 
   {{-- 2) Votre CSS statique compilé en local --}}
-  <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+   <link rel="stylesheet"
+        href="{{ asset('css/app.css') }}?v={{ filemtime(public_path('css/app.css')) }}">
+
 
   {{-- 3) AOS CSS (CDN) --}}
   <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
