@@ -1,44 +1,50 @@
-# === Stage 1: front build ===
+# -------------------------------
+# Stage 1: Build des assets front
+# -------------------------------
 FROM node:18 AS front-builder
+
 WORKDIR /app
 
-# Copier package.json, vite.config.js, etc.
+# Copier package.json + vite.config.js + tsconfig/postcss si besoin
 COPY package*.json vite.config.js ./
 
-RUN npm install
+# Installer les dépendances front
+RUN npm ci
 
-# Copier sources front et compiler
+# Copier les sources front et compiler
 COPY resources resources
 RUN npm run build
 
-# === Stage 2: Laravel ===
+# -------------------------------
+# Stage 2: Build de l'app Laravel
+# -------------------------------
 FROM php:8.1-fpm
 
-# Dépendances système + extensions PHP
+# 1) Dépendances système + extensions PHP
 RUN apt-get update && apt-get install -y \
     git unzip libzip-dev libpng-dev libonig-dev libpq-dev \
   && docker-php-ext-install pdo pdo_mysql pdo_pgsql zip gd mbstring
 
-# Installer Composer
+# 2) Installer Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www/html
 
-# Copier tout le code Laravel
+# 3) Copier tout le code Laravel
 COPY . .
 
-# Copier les assets compilés
+# 4) Copier les assets front-builder
 COPY --from=front-builder /app/public/build public/build
 
-# Installer dépendances PHP
+# 5) Installer dépendances PHP
 RUN composer install --no-dev --optimize-autoloader
 
-# Permissions
+# 6) Permissions
 RUN chown -R www-data:www-data storage bootstrap/cache
 
-# Entrypoint & port
+# 7) Entrypoint pour SQLite / migrations / démarrage
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
-ENTRYPOINT ["/entrypoint.sh"]
 
 EXPOSE 8000
+ENTRYPOINT ["/entrypoint.sh"]
