@@ -36,6 +36,8 @@ WORKDIR /var/www/html
 
 # Copier tout le code Laravel
 COPY . .
+# ... après COPY . .
+COPY public/css public/css
 
 # Copier les assets front-builder dans public/build
 COPY --from=front-builder /app/public/build public/build
