@@ -15,12 +15,14 @@
 }
 
 /* 2. Reset & global */
-* {
-  margin: 0;
-  padding: 0;
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 html, body {
+  margin: 0;
+  padding: 0;
   height: 100%;
 }
 body {
@@ -28,6 +30,13 @@ body {
   background: var(--pdos-light);
   color: var(--pdos-gray);
   line-height: 1.6;
+}
+h1,h2,h3,h4,h5,h6 {
+  color: var(--pdos-navy);
+  margin-bottom: .5rem;
+}
+p {
+  margin-bottom: 1rem;
 }
 a {
   color: var(--pdos-green);
@@ -38,18 +47,22 @@ a:hover {
 }
 
 /* 3. Utility classes */
-.text-pdos-navy   { color: var(--pdos-navy) !important; }
-.text-pdos-green  { color: var(--pdos-green) !important; }
-.text-pdos-white  { color: var(--pdos-white) !important; }
-.bg-pdos-navy     { background: var(--pdos-navy) !important; }
-.bg-pdos-green    { background: var(--pdos-green) !important; }
-.bg-pdos-white    { background: var(--pdos-white) !important; }
-.bg-pdos-light    { background: var(--pdos-light) !important; }
+.text-pdos-navy  { color: var(--pdos-navy) !important; }
+.text-pdos-green { color: var(--pdos-green) !important; }
+.text-pdos-white { color: var(--pdos-white) !important; }
+.bg-pdos-navy   { background: var(--pdos-navy) !important; }
+.bg-pdos-green  { background: var(--pdos-green) !important; }
+.bg-pdos-white  { background: var(--pdos-white) !important; }
+.bg-pdos-light  { background: var(--pdos-light) !important; }
 
 /* 4. Navbar */
 .navbar {
   background: var(--pdos-white);
   box-shadow: 0 2px 4px rgba(0,0,0,.1);
+}
+.navbar .navbar-brand img {
+  height: 40px;
+  filter: drop-shadow(0 0 5px rgba(0,0,0,.2));
 }
 .navbar .nav-link {
   color: var(--pdos-navy) !important;
@@ -59,90 +72,84 @@ a:hover {
   color: var(--pdos-green) !important;
 }
 
-/* 5. Hero Carousel */
-.carousel-item {
+/* 5. Hero (Home) */
+.hero {
   position: relative;
-  height: 75vh;
   overflow: hidden;
 }
-.carousel-item img {
+.hero img {
   width: 100%;
-  height: 100%;
+  height: 75vh;
   object-fit: cover;
 }
-.carousel-item::before {
+.hero::before {
   content: "";
   position: absolute; inset: 0;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0,0,0,.5);
 }
-.carousel-caption {
-  position: absolute;
-  top:50%; left:50%;
+.hero .hero-content {
+  position: absolute; top:50%; left:50%;
   transform: translate(-50%,-50%);
-  max-width:600px;
-  text-align:center;
-}
-.carousel-caption h1 {
   color: var(--pdos-white);
-  font-size: 2.5rem;
+  text-align: center;
+}
+.hero .hero-content h1 {
+  font-size: 3rem;
   margin-bottom: 1rem;
+  text-shadow: 0 2px 6px rgba(0,0,0,.8);
 }
-.carousel-caption p {
-  color: var(--pdos-white);
+.hero .hero-content p {
+  font-size: 1.25rem;
   margin-bottom: 1.5rem;
 }
-.carousel-caption .btn {
+.hero .hero-content .btn {
   background: var(--pdos-green);
   color: var(--pdos-navy);
   padding: .75rem 1.5rem;
-  border: none;
   font-weight: bold;
+  border: none;
 }
-.carousel-caption .btn:hover {
+.hero .hero-content .btn:hover {
   background: var(--pdos-navy);
   color: var(--pdos-white);
 }
 
-/* 6. Section titres */
-.section-title {
-  text-align: center;
-  margin-bottom: 3rem;
-}
-.section-title h2 {
-  color: var(--pdos-navy);
-  font-size: 2rem;
-  margin-bottom: .5rem;
-}
-.section-title p {
-  color: var(--pdos-gray);
-}
-
-/* 7. Statistiques (Accueil) */
-.stats-container {
+/* 6. Stats (Home) */
+.stats {
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
   gap: 2rem;
   padding: 4rem 0;
 }
-.stat-box {
+.stat {
   text-align: center;
   flex: 1 1 200px;
 }
-.stat-box i {
+.stat i {
   font-size: 3rem;
   color: var(--pdos-green);
   margin-bottom: .5rem;
 }
-.stat-box h3 {
-  color: var(--pdos-navy);
+.stat h3 {
   font-size: 2rem;
+  color: var(--pdos-navy);
+  margin-bottom: .5rem;
 }
-.stat-box p {
+
+/* 7. Section titles */
+.section-title {
+  text-align: center;
+  margin: 3rem 0 2rem;
+}
+.section-title h2 {
+  font-size: 2.5rem;
+}
+.section-title p {
   color: var(--pdos-gray);
 }
 
-/* 8. Cartes de services & blog */
+/* 8. Cards (Services & Blog) */
 .card-custom {
   border: none;
   border-radius: .5rem;
@@ -161,110 +168,152 @@ a:hover {
   color: var(--pdos-gray);
 }
 
-/* 9. About – équipe */
-.team-container {
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
+/* 9. Services grid */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+  gap: 2rem;
+  padding-bottom: 4rem;
+}
+
+/* 10. Team (About) */
+.team {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
   gap: 2rem;
   padding: 3rem 0;
 }
 .team-member {
   text-align: center;
-  flex: 1 1 200px;
 }
 .team-member img {
-  width: 100px; height: 100px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-bottom: 1rem;
-}
-.team-member h5 {
-  color: var(--pdos-navy);
-  margin-bottom: .5rem;
-}
-.team-member p {
-  color: var(--pdos-gray);
-  font-size: .9rem;
+  width:100px; height:100px;
+  border-radius:50%;
+  object-fit:cover;
+  margin-bottom:1rem;
 }
 
-/* 10. About – timeline */
+/* 11. Timeline (About) */
 .timeline {
-  list-style: none;
-  padding-left: 0;
-  margin-top: 2rem;
+  list-style:none;
+  padding-left:0;
+  margin-top:2rem;
 }
 .timeline li {
-  position: relative;
-  padding-left: 2rem;
-  margin-bottom: 1rem;
+  position:relative;
+  padding-left:2rem;
+  margin-bottom:1rem;
 }
 .timeline li::before {
-  content: "";
-  position: absolute;
-  left: 0; top: .3rem;
-  width: .5rem; height: .5rem;
-  background: var(--pdos-green);
-  border-radius: 50%;
+  content:"";
+  position:absolute;
+  left:0; top:.3rem;
+  width:.5rem; height:.5rem;
+  background:var(--pdos-green);
+  border-radius:50%;
 }
 .timeline li strong {
-  color: var(--pdos-navy);
+  color:var(--pdos-navy);
 }
 
-/* 11. Formulaire contact */
-.form-card {
-  border: none;
-  border-radius: .5rem;
-  box-shadow: 0 .25rem .5rem rgba(0,0,0,.1);
-  padding: 2rem;
+/* 12. Contact form */
+.contact-form {
+  max-width:600px;
+  margin:0 auto;
+  padding:2rem;
+  background:var(--pdos-white);
+  border-radius:.5rem;
+  box-shadow:0 .25rem .5rem rgba(0,0,0,.1);
 }
-.form-card .form-control:focus {
-  border-color: var(--pdos-green);
-  box-shadow: 0 0 0 .2rem rgba(163,230,53,.25);
+.contact-form .form-control:focus {
+  border-color:var(--pdos-green);
+  box-shadow:0 0 0 .2rem rgba(163,230,53,.25);
 }
-.form-card .btn {
-  background: var(--pdos-green);
-  color: var(--pdos-navy);
-  font-weight: bold;
-  padding: .75rem 1.5rem;
-  border: none;
+.contact-form .btn {
+  background:var(--pdos-green);
+  color:var(--pdos-navy);
+  padding:.75rem 1.5rem;
+  border:none;
+  font-weight:bold;
 }
-.form-card .btn:hover {
-  background: var(--pdos-navy);
-  color: var(--pdos-white);
+.contact-form .btn:hover {
+  background:var(--pdos-navy);
+  color:var(--pdos-white);
 }
 
-/* 12. Footer */
+/* 13. Blog list */
+.blog-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+  gap:2rem;
+  padding-bottom:4rem;
+}
+.blog-list .card img {
+  height:180px;
+  object-fit:cover;
+}
+
+/* 14. Blog article */
+.blog-article img {
+  max-width:100%;
+  height:auto;
+  margin-bottom:2rem;
+}
+.blog-article .article-content {
+  white-space: pre-wrap;
+}
+
+/* 15. Footer */
 footer {
-  background: var(--pdos-navy);
-  color: var(--pdos-white);
+  background:var(--pdos-navy);
+  color:var(--pdos-white);
+  padding:3rem 0;
 }
-footer h5, footer h6 {
-  color: var(--pdos-white);
+footer h5,h6 {
+  color:var(--pdos-white);
 }
 footer a {
-  color: var(--pdos-white);
+  color:var(--pdos-white);
 }
 footer a:hover {
-  color: var(--pdos-green);
+  color:var(--pdos-green);
+}
+.footer-bottom {
+  text-align:center;
+  margin-top:2rem;
+  font-size:.9rem;
 }
 
-/* 13. Scroll to top */
+/* 16. Scroll to top button */
 #scrollTop {
-  position: fixed;
-  bottom: 30px; right: 30px;
-  width: 3rem; height: 3rem;
-  border: none; border-radius: 50%;
-  background: var(--pdos-green); color: var(--pdos-navy);
-  display: none; align-items: center; justify-content: center;
-  cursor: pointer;
+  position:fixed;
+  bottom:30px; right:30px;
+  width:3rem; height:3rem;
+  border:none; border-radius:50%;
+  background:var(--pdos-green);
+  color:var(--pdos-navy);
+  display:none;
+  align-items:center; justify-content:center;
+  cursor:pointer;
+  box-shadow:0 .5rem 1rem rgba(0,0,0,.2);
 }
 #scrollTop:hover {
-  background: var(--pdos-navy); color: var(--pdos-white);
+  background:var(--pdos-navy);
+  color:var(--pdos-white);
 }
 
-/* 14. Responsive */
-@media (max-width: 768px) {
-  .carousel-caption h1 { font-size: 1.8rem; }
-  .stats-container, .team-container { gap: 1rem; }
+/* 17. Animations (AOS overrides) */
+[data-aos] {
+  opacity: 0;
+  transition-property: opacity, transform;
+}
+[data-aos].aos-animate {
+  opacity: 1;
+}
+
+/* 18. Responsive tweaks */
+@media (max-width:768px) {
+  .hero .hero-content h1 { font-size:2rem; }
+  .stats { flex-direction:column; align-items:center; }
+  .services-grid { grid-template-columns:1fr; }
 }
