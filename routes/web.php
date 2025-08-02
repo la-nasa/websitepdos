@@ -21,6 +21,12 @@ Route::post('/contact',            [ContactController::class,'send'])->name('con
 Route::get('/blog',                [ArticleController::class,'index'])->name('blog.index');
 Route::get('/blog/{article}',      [ArticleController::class,'show'])->name('blog.show');
 
+// routes/web.php ou mieux routes/api.php
+Route::get('/_migrate', function() {
+    \Artisan::call('migrate', ['--force' => true]);
+    return response('OK');
+});
+
 // Authenticated routes (admin)
 Route::middleware('auth')->group(function(){
     Route::get('/blog/create',         [ArticleController::class,'create'])->name('blog.create');
