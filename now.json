@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "name": "laravel-vite-app",
+  "builds": [
+    {
+      "src": "public/index.php",
+      "use": "@now/php",
+      "config": {
+        "maxDuration": 30
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/public/$1"
+    }
+  ]
+}

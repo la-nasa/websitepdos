@@ -4,7 +4,7 @@
     "scripts": {
         "dev": "vite",
         "build": "vite build",
-        "vercel-build": "npm run build && cp -a public build/public"
+        "vercel-build": "npm run build && php artisan vendor:publish --tag=public --force && cp -r public build/public"
     },
     "devDependencies": {
         "@popperjs/core": "^2.11.6",
