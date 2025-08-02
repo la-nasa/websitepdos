@@ -1,12 +1,25 @@
 {
   "version": 2,
-  "functions": {
-    "api/**/*.php": {
-      "runtime": "now-php@1.0.0"
+  "builds": [
+    {
+      "src": "public/**",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "resources/js/app.js",
+      "use": "@vercel/node",
+      "config": { 
+        "includeFiles": [
+          "resources/**",
+          "public/**"
+        ]
+      }
     }
-  },
+  ],
   "routes": [
-    { "src": "/_migrate", "dest": "api/index.php" },
-    { "src": "/(.*)",      "dest": "api/index.php" }
+    {
+      "src": "/(.*)",
+      "dest": "public/$1"
+    }
   ]
 }
