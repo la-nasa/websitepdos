@@ -2,30 +2,18 @@
   "version": 2,
   "builds": [
     {
-      "src": "build/public/**",
+      "src": "public/**",
       "use": "@vercel/static"
-    },
-    {
-      "src": "api/index.php",
-      "use": "@vercel/php",
-      "config": {
-        "includeFiles": [
-          "public/**",
-          "resources/**",
-          "routes/**",
-          "vendor/**"
-        ]
-      }
     }
   ],
   "routes": [
     {
-      "src": "/build/(.*)",
-      "dest": "/build/public/$1"
-    },
-    {
       "src": "/(.*)",
-      "dest": "/api/index.php"
+      "dest": "public/$1"
     }
-  ]
+  ],
+  "env": {
+    "APP_ENV": "production",
+    "APP_DEBUG": "false"
+  }
 }
